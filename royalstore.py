@@ -6,14 +6,14 @@ if "logged_in" not in st.session_state:
     st.session_state.logged_in = False
     st.session_state.user_role = None
     st.session_state.username = ""
-    st.session_state.users = pd.DataFrame({"username": ["admin"], "password": ["admin"], "role": ["admin"]})
+    st.session_state.users = pd.DataFrame({"username": ["MD Nazish"], "password": ["66600"], "role": ["admin"]})
     st.session_state.products = pd.DataFrame(columns=["product", "price"])
     st.session_state.cart = []
 
 def admin_page():
-    st.write("## Admin Panel")
+    st.write("Admin Panel")
     # --- Create New User ---
-    st.write("### Create New User")
+    st.write("Create New User")
     with st.form("create_user"):
         uname = st.text_input("Username")
         pwd = st.text_input("Password", type="password")
@@ -30,7 +30,7 @@ def admin_page():
                 st.warning("All fields required.")
 
     # --- Add Product ---
-    st.write("### Add Product")
+    st.write("Add Product")
     with st.form("add_product"):
         pname = st.text_input("Product Name")
         pprice = st.number_input("Price", min_value=1.0, step=0.5)
@@ -44,12 +44,12 @@ def admin_page():
                 st.warning("Product name required.")
 
     # --- Product List ---
-    st.write("### Product List")
+    st.write("Product List")
     st.table(st.session_state.products[["product", "price"]])
 
 def user_page(username):
-    st.write(f"## Welcome, {username}")
-    st.write("### Products List")
+    st.write(f"Welcome, {username}")
+    st.write("Products List")
     if st.session_state.products.empty:
         st.info("No products available.")
         return
@@ -65,7 +65,7 @@ def user_page(username):
                 cart.append((row['product'], row['price']))
     st.session_state.cart = cart
 
-    st.write("### Cart")
+    st.write("Cart")
     if cart:
         cart_df = pd.DataFrame(cart, columns=["Product", "Price"])
         st.table(cart_df)
@@ -76,7 +76,7 @@ def user_page(username):
         st.info("Your cart is empty.")
 
 def login_page():
-    st.write("# Login")
+    st.write("Login")
     role = st.radio("Login as:", ["admin", "user"])
     login_user = st.text_input("Username", key="login_user")
     login_pwd = st.text_input("Password", type="password", key="login_pwd")
@@ -115,3 +115,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
