@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 
-# Initialize session state variables
+# Session state initialization
 if "logged_in" not in st.session_state:
     st.session_state.logged_in = False
     st.session_state.user_role = None
@@ -12,7 +12,6 @@ if "logged_in" not in st.session_state:
 
 def admin_page():
     st.write("## Admin Panel")
-
     # --- Create New User ---
     st.write("### Create New User")
     with st.form("create_user"):
@@ -24,7 +23,8 @@ def admin_page():
                 if uname in st.session_state.users["username"].values:
                     st.error("User already exists.")
                 else:
-                    st.session_state.users = st.session_state.users.append({"username": uname, "password": pwd, "role": "user"}, ignore_index=True)
+                    new_user = pd.DataFrame([{"username": uname, "password": pwd, "role": "user"}])
+                    st.session_state.users = pd.concat([st.session_state.users, new_user], ignore_index=True)
                     st.success(f"User '{uname}' created.")
             else:
                 st.warning("All fields required.")
@@ -37,7 +37,8 @@ def admin_page():
         submitted = st.form_submit_button("Add Product")
         if submitted:
             if pname:
-                st.session_state.products = st.session_state.products.append({"product": pname, "price": pprice}, ignore_index=True)
+                new_product = pd.DataFrame([{"product": pname, "price": pprice}])
+                st.session_state.products = pd.concat([st.session_state.products, new_product], ignore_index=True)
                 st.success(f"Product '{pname}' added.")
             else:
                 st.warning("Product name required.")
@@ -48,7 +49,6 @@ def admin_page():
 
 def user_page(username):
     st.write(f"## Welcome, {username}")
-
     st.write("### Products List")
     if st.session_state.products.empty:
         st.info("No products available.")
@@ -101,8 +101,7 @@ def logout():
     st.session_state.cart = []
 
 def main():
-    st.title("🛒 Simple Online Shopping Streamlit App")
-
+    st.title("🛒 ShopStream")  # App Name
     if st.session_state.logged_in:
         st.sidebar.write(f"Logged in as: {st.session_state.username} ({st.session_state.user_role})")
         if st.sidebar.button("Logout"):
