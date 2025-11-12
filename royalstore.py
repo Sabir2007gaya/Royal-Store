@@ -6,7 +6,7 @@ if "logged_in" not in st.session_state:
     st.session_state.logged_in = False
     st.session_state.user_role = None
     st.session_state.username = ""
-    st.session_state.users = pd.DataFrame({"username": ["MD Nazish"], "password": ["66600"], "role": ["admin"]})
+    st.session_state.users = pd.DataFrame({"username": ["admin"], "password": ["admin"], "role": ["admin"]})
     st.session_state.products = pd.DataFrame(columns=["product", "price"])
     st.session_state.cart = []
 
@@ -115,5 +115,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
