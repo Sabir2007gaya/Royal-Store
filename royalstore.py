@@ -101,7 +101,7 @@ def logout():
     st.session_state.cart = []
 
 def main():
-    st.title("🛒 ShopStream")  # App Name
+    st.title("Royal Store")  # App Name
     if st.session_state.logged_in:
         st.sidebar.write(f"Logged in as: {st.session_state.username} ({st.session_state.user_role})")
         if st.sidebar.button("Logout"):
@@ -115,4 +115,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
